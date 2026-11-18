@@ -1,0 +1,25 @@
+<view class="report-page">
+  <view class="report-header"><button bindtap="back">‹</button><view><text>身体成分 · 阶段报告</text><view class="h1">示例学员 · InBody 趋势报告</view><text class="p">2026.03.04—2026.06.05 · 3 次测量</text></view></view>
+  <view wx:if="{{loading}}" class="empty-state">正在整理三次身体成分报告…</view>
+  <view wx:else>
+    <button class="download" bindtap="downloadPdf">↧ 下载 PDF</button>
+    <view class="hero"><view class="shield">✓</view><view><text>阶段结论</text><view class="h2">{{report.headline}}</view><text class="p">{{report.summary}}</text></view></view>
+    <view class="metric-grid"><view wx:for="{{cards}}" wx:key="label" class="metric-card is-{{item.tone}}"><text>{{item.label}}</text><text class="strong">{{item.value}}</text><text class="small">较首次 <text class="b">{{item.change}}</text></text></view></view>
+
+    <view class="section-card"><view class="section-head"><view><text>01 · 变化轨迹</text><view class="h2">四个关键指标，看清减重质量</view></view><text class="tag">同图对照</text></view>
+      <view class="small-chart" wx:for="{{charts}}" wx:key="label"><view><text class="strong">{{item.label}}</text><text>{{item.points[0].value}} → {{item.points[2].value}}</text></view><trend-chart points="{{item.points}}" metric="weight" height="128"></trend-chart></view>
+      <view class="note"><text class="strong">读图边界</text><text class="p">前两次报告未显示设备型号，测量前饮水、进食和运动条件也未完整记录；适合看方向，不宜把小数点差异视作精确组织变化。</text></view>
+    </view>
+
+    <view class="section-card"><view class="section-head"><view><text>02 · 末次快照</text><view class="h2">体重构成与重要参数</view></view></view>
+      <view class="composition"><view class="ring" style="background:conic-gradient(#f2a24a 0 {{latest.bodyFatPercent}}%,#2e9d62 {{latest.bodyFatPercent}}% 100%)"><view><text class="strong">{{latest.bodyFatPercent}}%</text><text>体脂率</text></view></view><view class="composition-key"><text><view class="i fat"></view>体脂肪 <text class="b">{{latest.bodyFatMassKg}} kg</text></text><text><view class="i lean"></view>其余体重 <text class="b">{{leanPercent}}%</text></text></view></view>
+      <view class="detail-grid"><view><text class="strong">{{report.latestDetails.inBodyScore}}</text><text>InBody评分</text></view><view><text class="strong">{{report.latestDetails.visceralFatLevel}}</text><text>内脏脂肪等级</text></view><view><text class="strong">{{report.latestDetails.smiKgM2}}</text><text>SMI kg/m²</text></view><view><text class="strong">{{latest.bmi}}</text><text>BMI</text></view></view>
+    </view>
+
+    <view class="section-card"><view class="section-head"><view><text>03 · 怎么理解</text><view class="h2">把数字变成判断</view></view></view><view wx:for="{{report.findings}}" wx:key="*this" class="finding"><text>{{index+1}}</text><view><view class="h3">{{item[0]}}</view><text class="p">{{item[1]}}</text></view></view></view>
+    <view class="section-card"><view class="section-head"><view><text>04 · 下一阶段</text><view class="h2">减脂继续，肌肉要守住</view></view></view><view wx:for="{{report.actions}}" wx:key="*this" class="action"><text>✓</text><text class="p">{{item}}</text></view></view>
+    <view class="section-card table-card"><view class="section-head"><view><text>05 · 原始读数</text><view class="h2">三次报告对照表</view></view></view><scroll-view scroll-x><view class="data-table"><view class="table-row table-head"><text>指标</text><text>03.04</text><text>04.16</text><text>06.05</text></view><view wx:for="{{rows}}" wx:key="label" class="table-row"><text>{{item.label}}</text><text wx:for="{{item.values}}" wx:for-item="value" wx:key="*this">{{value}}</text></view></view></scroll-view></view>
+    <view class="footer"><text>版本 1.0</text><text>仅供示例学员与教练复盘</text></view>
+  </view>
+</view>
+

@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "我的记录",
+  "usingComponents": {
+    "nutrition-pie": "/components/nutrition-pie/index",
+    "trend-chart": "/components/trend-chart/index"
+  }
+}

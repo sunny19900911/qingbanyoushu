@@ -1,0 +1,46 @@
+<view class="page-shell trend-page">
+  <view class="page-header"><view class="h1 page-title">我的记录</view><button class="user-chip" bindtap="chooseUser"><text class="user-chip__avatar">{{userAlias === 'YC' ? 'Y' : '张'}}</text>{{userAlias}}⌄</button></view>
+  <view class="segmented top-tabs"><button class="{{mode === 'charts' ? 'is-active' : ''}}" data-mode="charts" bindtap="changeMode">图表分析</button><button class="{{mode === 'raw' ? 'is-active' : ''}}" data-mode="raw" bindtap="changeMode">原始记录</button></view>
+  <view wx:if="{{loading}}" class="empty-state">正在读取档案…</view>
+
+  <view wx:elif="{{mode === 'charts'}}">
+    <view class="control-row"><view class="period-tabs"><button wx:for="{{periods}}" wx:key="*this" class="{{period === item[0] ? 'is-active' : ''}}" data-value="{{item[0]}}" bindtap="changePeriod">{{item[1]}}</button></view><button class="report-button" bindtap="downloadReport">↧ 输出报告</button></view>
+    <button wx:if="{{userId === 'USR-DEMO-001'}}" class="inbody-link" bindtap="openInbody"><view><text class="strong">InBody 身体成分趋势</text><text>肌肉、脂肪与水分的阶段报告</text></view><text>›</text></button>
+
+    <view class="overview card">
+      <view class="overview-title"><view><text>长期趋势总览</text><text class="strong">{{period === 'all' ? '全部记录' : '近' + period + '天'}}</text></view><text class="pill">体重＋健康＋运动</text></view>
+      <view class="overview-lines">
+        <view><view class="i is-green"></view><text>体重</text><text class="strong">{{metric === 'weight' ? primaryStat : '点击下方查看'}}</text></view>
+        <view><view class="i is-orange"></view><text>健康分</text><text class="strong">饮食结构</text></view>
+        <view><view class="i is-purple"></view><text>运动分</text><text class="strong">60分钟满分</text></view>
+      </view>
+    </view>
+
+    <view class="metric-card card">
+      <view class="metric-tabs"><button wx:for="{{metrics}}" wx:key="*this" class="{{metric === item[0] ? 'is-active' : ''}}" data-value="{{item[0]}}" bindtap="changeMetric">{{item[1]}}</button></view>
+      <view class="chart-heading"><text>{{metricTitle}}</text><view><text class="small">{{metric === 'weight' ? '区间变化' : '平均'}}</text><text class="strong">{{primaryStat}}</text></view></view>
+      <trend-chart points="{{chartPoints}}" metric="{{metric}}" height="190"></trend-chart>
+      <view class="chart-meta"><text>记录 {{count}} 次</text><text>{{secondaryStat}}</text></view>
+    </view>
+
+    <view class="section-title"><view class="h2">近30天</view><view class="legend"><text><view class="i veg"></view>蔬菜</text><text><view class="i carb"></view>碳水</text><text><view class="i protein"></view>蛋白质</text></view></view>
+    <view class="daily-table card">
+      <view class="daily-head"><text>体重</text><text>饮食<text class="small">健康分</text></text><text>运动<text class="small"><view class="i aerobic"></view>有氧 <view class="i strength"></view>无氧</text></text></view>
+      <view wx:for="{{dailyRows}}" wx:key="date" class="daily-row">
+        <view class="weight-cell"><text>{{item.dateLabel}}</text><text class="strong">{{item.weightLabel}}</text></view>
+        <view class="food-cell" wx:if="{{item.food}}"><nutrition-pie vegetables="{{item.food.vegetables}}" carbs="{{item.food.carbs}}" protein="{{item.food.protein}}" score="{{item.food.score}}" size="45"></nutrition-pie><text class="strong">{{item.food.score}}分</text></view><view wx:else class="cell-empty">未记录</view>
+        <view class="exercise-cell" wx:if="{{item.motion && item.motion.totalMinutes}}"><view class="bar-pair"><view><view class="i" style="height:{{item.motion.aerobicMinutes ? (item.motion.aerobicMinutes >= 60 ? 100 : item.motion.aerobicMinutes / 60 * 100) : 0}}%"></view></view><view><view class="i strength" style="height:{{item.motion.anaerobicMinutes ? (item.motion.anaerobicMinutes >= 60 ? 100 : item.motion.anaerobicMinutes / 60 * 100) : 0}}%"></view></view></view><text class="strong">{{item.motion.totalMinutes}}分</text></view><view wx:else class="cell-empty">未记录</view>
+      </view>
+    </view>
+  </view>
+
+  <view wx:else class="raw-list">
+    <view wx:for="{{rawRows}}" wx:key="date" class="raw-card card {{item.expanded ? 'is-expanded' : ''}}">
+      <button class="raw-toggle" data-date="{{item.date}}" bindtap="toggleRaw"><text>{{item.dateLabel}}</text><text class="strong">{{item.entry && item.entry.weightKg !== null ? item.entry.weightKg + ' kg' : '无体重'}}</text><text>{{item.expanded ? '⌃' : '⌄'}}</text></button>
+      <view wx:if="{{item.expanded && item.entry}}" class="raw-detail"><view><text class="raw-icon food">餐</text><text class="p">{{item.entry.dietDisplay}}</text></view><view><text class="raw-icon motion">动</text><text class="p">{{item.entry.activityDisplay}}{{item.motion && item.motion.totalMinutes ? ' · 共' + item.motion.totalMinutes + '分钟' : ''}}</text></view></view>
+      <view wx:elif="{{item.expanded}}" class="raw-empty">当天没有留下记录</view>
+    </view>
+    <text class="list-end">已显示近30天记录</text>
+  </view>
+</view>
+

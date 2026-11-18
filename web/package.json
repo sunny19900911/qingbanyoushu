@@ -1,0 +1,38 @@
+{
+  "name": "daily-weight-journal-prototype",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch server/index.ts",
+    "dev:test": "set \"ACCOUNT_TEST_LOGIN=1\"&& set \"PORT=4318\"&& set \"HOST=127.0.0.1\"&& set \"PROTOTYPE_STORE_PATH=runtime/account-trial/entries.jsonl\"&& set \"PROTOTYPE_ACTION_STORE_PATH=runtime/account-trial/actions.jsonl\"&& set \"PROTOTYPE_QUESTION_STORE_PATH=runtime/account-trial/questions.jsonl\"&& set \"PROTOTYPE_REPLY_STORE_PATH=runtime/account-trial/replies.jsonl\"&& set \"PROTOTYPE_TRAINING_STORE_PATH=runtime/account-trial/training.jsonl\"&& set \"ACCOUNT_STORE_DIR=runtime/account-trial/accounts\"&& tsx watch server/index.ts",
+    "dev:lan": "set \"HOST=0.0.0.0\"&& tsx watch server/index.ts",
+    "start": "tsx server/index.ts",
+    "build": "tsc --noEmit && vite build",
+    "check": "tsc --noEmit --pretty false",
+    "test": "vitest run",
+    "report:example": "tsx scripts/generate-example-report.ts",
+    "report:inbody": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/generate-inbody-pdf.ps1"
+  },
+  "dependencies": {
+    "@resvg/resvg-js": "^2.6.2",
+    "docx": "^9.6.1",
+    "dotenv": "^16.4.7",
+    "express": "^5.1.0",
+    "lucide-react": "^0.468.0",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.3",
+    "@types/node": "^24.3.0",
+    "@types/react": "^19.1.10",
+    "@types/react-dom": "^19.1.7",
+    "@vitejs/plugin-react": "^6.1.1",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vite": "^8.3.0",
+    "vitest": "^5.0.1"
+  }
+}

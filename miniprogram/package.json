@@ -1,0 +1,6 @@
+{
+  "name": "qingban-youshu-miniprogram",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": { "test": "node scripts/validate.js" }
+}

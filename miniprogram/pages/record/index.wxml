@@ -1,0 +1,59 @@
+<view class="page-shell record-page" style="padding-top: {{headerTop}}px;">
+  <view wx:if="{{phase === 'idle' || phase === 'parsing'}}">
+    <view class="page-header">
+      <text class="date-label">{{dateLabel}}</text>
+      <button class="user-chip" bindtap="chooseUser"><text class="user-chip__avatar">{{userAlias === 'YC' ? 'Y' : '张'}}</text>{{userAlias}}⌄</button>
+    </view>
+    <view class="intro">
+      <image src="/assets/logo.png" mode="aspectFill"></image>
+      <text class="brand">轻伴有数</text>
+      <view class="record-title">今天想记录什么？</view>
+      <text class="record-subtitle">体重、饮食、运动，想到什么就说什么</text>
+    </view>
+    <view class="voice-zone {{isRecording ? 'is-recording' : ''}}">
+      <view class="voice-ring voice-ring--one"></view><view class="voice-ring voice-ring--two"></view>
+      <view class="voice-button" aria-role="button" aria-label="开始或结束语音记录" bindtap="toggleRecord"><view class="mic"></view></view>
+    </view>
+    <view class="voice-copy">
+      <text class="voice-title">{{phase === 'parsing' ? '正在整理' : isRecording ? '再点一下结束' : '点一下开始说话'}}</text>
+      <text wx:if="{{isRecording}}">正在听你说…</text>
+    </view>
+    <button class="keyboard-link" bindtap="openKeyboard"><text class="keyboard-icon">⌨</text>不方便说？键盘输入</button>
+    <view wx:if="{{voiceHint}}" class="voice-hint">{{voiceHint}}</view>
+  </view>
+
+  <view wx:elif="{{phase === 'confirm'}}" class="confirm-page">
+    <button class="back" bindtap="reset">‹</button>
+    <view class="confirm-title">我听到的是</view>
+    <view class="transcript">{{preview.rawText}}</view>
+    <view class="summary card">
+      <view><text class="summary-icon">⚖</text><text class="summary-label">体重</text><text class="summary-value {{preview.weightKg === null ? 'muted' : ''}}">{{preview.weightKg === null ? '未识别' : preview.weightKg + ' kg'}}</text></view>
+      <view><text class="summary-icon">餐</text><text class="summary-label">饮食</text><text class="summary-value {{!preview.dietText ? 'muted' : ''}}">{{preview.dietText || '未识别'}}</text></view>
+      <view><text class="summary-icon">动</text><text class="summary-label">运动</text><text class="summary-value {{!preview.activityText ? 'muted' : ''}}">{{preview.activityText || '未识别'}}</text></view>
+    </view>
+    <view wx:if="{{preview.followupQuestion}}" class="followup card">
+      <text class="followup-title">想确认一次</text><text class="followup-copy">{{preview.followupQuestion}}</text>
+      <view><input placeholder="补充一句话" value="{{followup}}" bindinput="onFollowupInput"/><button bindtap="addFollowup">确认</button></view>
+    </view>
+    <button class="primary-button" loading="{{saving}}" bindtap="confirmEntry">{{saving ? '正在存档' : '确认存档'}}</button>
+    <button class="secondary-button" bindtap="reset">再说一次</button>
+  </view>
+
+  <view wx:else class="saved-page">
+    <view class="saved-check">✓</view><view class="saved-title">今天已经存好了</view><text class="saved-subtitle">原始文字和确认后的字段已进入本机档案。</text>
+    <view class="feedback-card card"><text>✦</text><view><view class="feedback-title">今天值得保留</view><text class="feedback-copy">{{feedback.preserve}}</text></view></view>
+    <view class="feedback-card card"><text>→</text><view><view class="feedback-title">下一步的小动作</view><text class="feedback-copy">{{feedback.nextAction}}</text></view></view>
+    <button class="primary-button" bindtap="reset">完成</button>
+  </view>
+
+  <view wx:if="{{keyboardOpen}}" class="sheet-mask" catchtap="closeKeyboard">
+    <view class="input-sheet" catchtap="noop">
+      <view class="sheet-handle"></view>
+      <view class="sheet-title"><view class="sheet-heading">用一句话记录今天</view><button bindtap="closeKeyboard">×</button></view>
+      <textarea auto-focus maxlength="500" value="{{typedText}}" bindinput="onTextInput" placeholder="例如：今天早上58.6公斤，中午吃了牛肉面，晚上走了40分钟……"></textarea>
+      <text wx:if="{{voiceHint}}" class="sheet-hint">{{voiceHint}}</text>
+      <view class="sheet-action"><button class="primary-button" disabled="{{typedText.length < 2}}" bindtap="submitText">整理这条记录</button></view>
+    </view>
+  </view>
+</view>
+

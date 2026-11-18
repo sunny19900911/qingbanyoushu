@@ -1,0 +1,2 @@
+<view class="pie-wrap" style="width:{{size}}px;height:{{size}}px"><canvas type="2d" id="pie" class="pie"></canvas></view>
+

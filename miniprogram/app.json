@@ -1,0 +1,30 @@
+{
+  "pages": [
+    "pages/record/index",
+    "pages/trend/index",
+    "pages/coach/index",
+    "pages/inbody/index"
+  ],
+  "window": {
+    "navigationStyle": "custom",
+    "backgroundTextStyle": "light",
+    "backgroundColor": "#f5f8f5",
+    "navigationBarBackgroundColor": "#f5f8f5",
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "轻伴有数"
+  },
+  "tabBar": {
+    "custom": true,
+    "color": "#8b938d",
+    "selectedColor": "#2e9d62",
+    "backgroundColor": "#ffffff",
+    "list": [
+      { "pagePath": "pages/record/index", "text": "记录" },
+      { "pagePath": "pages/trend/index", "text": "趋势" },
+      { "pagePath": "pages/coach/index", "text": "训练·教练" }
+    ]
+  },
+  "style": "v2",
+  "lazyCodeLoading": "requiredComponents",
+  "sitemapLocation": "sitemap.json"
+}

@@ -1,0 +1,43 @@
+page {
+  --green: #2e9d62;
+  --green-dark: #1f7448;
+  --green-soft: #e8f4ec;
+  --ink: #17231d;
+  --muted: #7d8982;
+  --line: #e7ece8;
+  --paper: #ffffff;
+  --canvas: #f5f8f5;
+  --orange: #f2a24a;
+  --blue: #5796d2;
+  --purple: #8268c7;
+  background: var(--canvas);
+  color: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-size: 28rpx;
+}
+
+view, text, button, input, textarea, scroll-view, canvas { box-sizing: border-box; }
+button::after { border: 0; }
+button { margin: 0; padding: 0; line-height: 1.2; background: transparent; }
+
+.page-shell { min-height: 100vh; padding: calc(env(safe-area-inset-top) + 36rpx) 32rpx calc(150rpx + env(safe-area-inset-bottom)); }
+.page-header { display: flex; align-items: center; justify-content: space-between; min-height: 72rpx; }
+.page-title { font-size: 42rpx; font-weight: 800; letter-spacing: -1rpx; }
+.date-label { color: #68736d; font-size: 27rpx; font-weight: 600; }
+.user-chip { display: flex; align-items: center; gap: 10rpx; padding: 14rpx 20rpx; color: var(--green-dark); background: var(--green-soft); border-radius: 999rpx; font-size: 25rpx; font-weight: 700; }
+.user-chip__avatar { width: 36rpx; height: 36rpx; display: grid; place-items: center; color: #fff; background: var(--green); border-radius: 50%; font-size: 20rpx; }
+
+.primary-button { width: 100%; min-height: 94rpx; display: flex; align-items: center; justify-content: center; gap: 14rpx; color: #fff; background: var(--green); border-radius: 28rpx; font-size: 30rpx; font-weight: 800; box-shadow: 0 18rpx 38rpx rgba(46,157,98,.2); }
+.secondary-button { width: 100%; min-height: 84rpx; display: flex; align-items: center; justify-content: center; color: var(--green-dark); background: var(--green-soft); border-radius: 24rpx; font-size: 28rpx; font-weight: 700; }
+.card { background: #fff; border: 1rpx solid var(--line); border-radius: 32rpx; box-shadow: 0 12rpx 32rpx rgba(29,58,42,.06); }
+.segmented { display: flex; padding: 7rpx; background: #eaf0ec; border-radius: 22rpx; }
+.segmented button { flex: 1; min-height: 66rpx; color: #77817b; border-radius: 17rpx; font-size: 27rpx; font-weight: 700; }
+.segmented button.is-active { color: var(--green-dark); background: #fff; box-shadow: 0 6rpx 18rpx rgba(32,62,45,.08); }
+.section-title { display: flex; align-items: center; justify-content: space-between; margin: 38rpx 0 20rpx; }
+.section-title .h2 { margin: 0; font-size: 33rpx; font-weight: 800; }
+.section-title text { color: var(--muted); font-size: 23rpx; }
+.empty-state { padding: 70rpx 20rpx; color: var(--muted); text-align: center; }
+.icon-circle { display: grid; place-items: center; border-radius: 50%; }
+.pill { display: inline-flex; align-items: center; padding: 8rpx 16rpx; color: var(--green-dark); background: var(--green-soft); border-radius: 999rpx; font-size: 22rpx; font-weight: 700; }
+.status-bar-space { height: env(safe-area-inset-top); }
+

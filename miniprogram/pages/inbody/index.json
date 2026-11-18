@@ -1,0 +1,1 @@
+{ "navigationBarTitleText": "InBody 趋势报告", "usingComponents": { "trend-chart": "/components/trend-chart/index" } }
